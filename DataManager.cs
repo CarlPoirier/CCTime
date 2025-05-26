@@ -163,29 +163,28 @@ namespace CCTime
 			}
 		}
 
-		public static bool DayExsists( DateTime dt )
+		public static bool DayExists( DateTime dt )
 		{
 			return TaskManager.taskData.ContainsKey( dt.ToString( "yyyy-MM-dd" ) );
 		}
 
 		public static List<Task> GetDay( DateTime dt )
 		{
-			if( !TaskManager.taskData.ContainsKey( dt.ToString( "yyyy-MM-dd" ) ) ) return null;
-			return TaskManager.taskData[dt.ToString( "yyyy-MM-dd" )];
+			if (DayExists( dt ))
+			{
+				return TaskManager.taskData[dt.ToString("yyyy-MM-dd")];
+			}
+			else
+			{
+				// add today, if not present, by cloning previous date
+				return AddDay(dt, GetPreviousDate(dt, true));
+			}
 		}
 
 		public static List<Task> GetToday()
 		{
 			var today = DateTime.Now;
-			if( DayExsists( today ) )
-			{
-				return TaskManager.taskData[today.ToString( "yyyy-MM-dd" )];
-			}
-			else
-			{
-				// add today, if not present, by cloning previous date
-				return AddDay( today, GetPreviousDate( today, true ) );
-			}
+			return GetDay( today );
 		}
 
 		public static string GetNextDate( DateTime dt )

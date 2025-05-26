@@ -24,11 +24,11 @@ namespace CCTime
 
 			if(this.ChooseFromAvailable)
 			{
-				return TaskManager.DayExsists( dt );
+				return TaskManager.DayExists( dt );
 			}
 			else
 			{
-				return !TaskManager.DayExsists( dt );
+				return !TaskManager.DayExists( dt );
 			}
 		}
 
